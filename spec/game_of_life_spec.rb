@@ -8,6 +8,9 @@ class GameOfLife
   def alive(x, y)
     grid[x][y] == 1
   end
+  def tick
+    grid[1][1]=0
+  end
 end
 
 describe GameOfLife do
@@ -18,14 +21,21 @@ describe GameOfLife do
     end
   end
 
-  describe "#alive" do
-    it "should say me if cell alive" do
-      game = GameOfLife.new([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-      game.alive(1, 1).should == false
-      game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
-      game.alive(1, 1).should == true
-      game.alive(0, 1).should == false
+    describe "#alive" do
+      it "should say me if cell alive" do
+        game = GameOfLife.new([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+        game.alive(1, 1).should == false
+        game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+        game.alive(1, 1).should == true
+        game.alive(0, 1).should == false
+      end
     end
 
-  end
+      describe "#tick" do
+        it "should advance time" do
+          game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+          game.tick
+          game.alive(1,1).should==false
+        end
+      end
 end
