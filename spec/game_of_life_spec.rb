@@ -12,8 +12,9 @@ class GameOfLife
   end
 
   def tick
-    if grid.flatten.select{|c| c == 1}.count > 0
-      grid[1][1] = 1
+    nb_neighbors = grid.flatten.select{|c| c == 1}.count
+    if nb_neighbors < 3
+      grid[1][1] = 0
     end
   end
 end
