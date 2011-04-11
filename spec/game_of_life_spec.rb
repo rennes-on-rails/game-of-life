@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 class GameOfLife
-  def grid
-    [1, 1, 1]
+  attr_accessor :grid
+  def initialize(grid)
+    @grid = grid
   end
-
   def alive(x, y)
-    false
+    grid[x][y] == 1
   end
 end
 
@@ -21,7 +21,11 @@ describe GameOfLife do
   describe "#alive" do
     it "should say me if cell alive" do
       game = GameOfLife.new([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
-      game.alive(1, 1) == false
+      game.alive(1, 1).should == false
+      game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+      game.alive(1, 1).should == true
+      game.alive(0, 1).should == false
     end
+
   end
 end
