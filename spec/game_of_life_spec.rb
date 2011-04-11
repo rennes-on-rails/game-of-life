@@ -18,7 +18,9 @@ class GameOfLife
         grid[1][1] = 0
       end
     else
+      if nb_neighbors == 3
         grid[1][1] = 1
+      end
     end
   end
 end
@@ -66,10 +68,17 @@ describe GameOfLife do
         end
       end
         context "dead with 3 alive neighbors" do
-          it "central cell should be alive, alive !" do
+          it "central cell should be dead to alive !" do
             game = GameOfLife.new([[1, 1, 0], [1, 0, 0], [0, 0, 0]])
             game.tick
             game.alive(1,1).should == true
+          end
+        end
+        context "alive with 1 alive neighbors" do
+          it "central cell should be alive to dead !" do
+            game = GameOfLife.new([[1, 0, 0], [0, 1, 0], [0, 0, 0]])
+            game.tick
+            game.alive(1,1).should == false
           end
         end
   end
