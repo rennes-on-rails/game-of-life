@@ -2,12 +2,15 @@ require 'spec_helper'
 
 class GameOfLife
   attr_accessor :grid
+
   def initialize(grid)
     @grid = grid
   end
+
   def alive(x, y)
     grid[x][y] == 1
   end
+
   def tick
     if grid.flatten.select{|c| c == 1}.count > 0
       grid[1][1] = 1
@@ -38,7 +41,7 @@ describe GameOfLife do
       it "central cell should die" do
         game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
         game.tick
-        game.alive(1,1).should==false
+        game.alive(1,1).should == false
       end
     end
 
@@ -46,7 +49,7 @@ describe GameOfLife do
       it "central cell should still be alive" do
         game = GameOfLife.new([[1, 1, 0], [0, 1, 0], [0, 0, 0]])
         game.tick
-        game.alive(1,1).should==true
+        game.alive(1,1).should == true
       end
     end
   end
