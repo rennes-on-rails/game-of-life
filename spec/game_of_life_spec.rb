@@ -32,10 +32,20 @@ describe GameOfLife do
   end
 
   describe "#tick" do
-    it "should advance time" do
-      game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
-      game.tick
-      game.alive(1,1).should==false
+    context "with 0 alive neighbors" do
+      it "central cell should die" do
+        game = GameOfLife.new([[0, 0, 0], [0, 1, 0], [0, 0, 0]])
+        game.tick
+        game.alive(1,1).should==false
+      end
+    end
+
+    context "with 2 alive neighbors" do
+      it "central cell should still be alive" do
+        game = GameOfLife.new([[1, 1, 0], [0, 1, 0], [0, 0, 0]])
+        game.tick
+        game.alive(1,1).should==true
+      end
     end
   end
 end
