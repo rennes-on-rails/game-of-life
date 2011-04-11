@@ -9,7 +9,9 @@ class GameOfLife
     grid[x][y] == 1
   end
   def tick
-    grid[1][1]=0
+    if grid.flatten.select{|c| c == 1}.count > 0
+      grid[1][1] = 1
+    end
   end
 end
 
