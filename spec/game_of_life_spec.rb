@@ -13,8 +13,12 @@ class GameOfLife
 
   def tick
     nb_neighbors = grid.flatten.select{|c| c == 1}.count
-    if nb_neighbors < 3
-      grid[1][1] = 0
+    if alive(1,1)
+      if nb_neighbors < 3 or 4 < nb_neighbors
+        grid[1][1] = 0
+      end
+    else
+        grid[1][1] = 1
     end
   end
 end
@@ -46,12 +50,27 @@ describe GameOfLife do
       end
     end
 
-    context "with 2 alive neighbors" do
-      it "central cell should still be alive" do
-        game = GameOfLife.new([[1, 1, 0], [0, 1, 0], [0, 0, 0]])
-        game.tick
-        game.alive(1,1).should == true
+      context "with 2 alive neighbors" do
+        it "central cell should still be alive" do
+          game = GameOfLife.new([[1, 1, 0], [0, 1, 0], [0, 0, 0]])
+          game.tick
+          game.alive(1,1).should == true
+        end
       end
-    end
+
+      context "with 4 alive neighbors" do
+        it "central cell should die" do
+          game = GameOfLife.new([[1, 1, 0], [1, 1, 1], [0, 0, 0]])
+          game.tick
+          game.alive(1,1).should == false
+        end
+      end
+        context "dead with 3 alive neighbors" do
+          it "central cell should be alive, alive !" do
+            game = GameOfLife.new([[1, 1, 0], [1, 0, 0], [0, 0, 0]])
+            game.tick
+            game.alive(1,1).should == true
+          end
+        end
   end
 end
